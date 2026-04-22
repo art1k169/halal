@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ишак или Свин?</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 50px;
+        }
+
+        .container {
+            display: flex;
+            gap: 40px;
+        }
+
+        .card {
+            padding: 30px 50px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            user-select: none;
+            text-align: center;
+        }
+
+        /* Стиль для Ишака */
+        .donkey {
+            background-color: #808080;
+            box-shadow: 0 8px #555;
+        }
+
+        /* Стиль для Свина */
+        .pig {
+            background-color: #ff99cc;
+            box-shadow: 0 8px #cc77aa;
+        }
+
+        .card:active {
+            transform: translateY(4px);
+            box-shadow: 0 4px #444;
+        }
+
+        .donkey:active { box-shadow: 0 4px #555; }
+        .pig:active { box-shadow: 0 4px #cc77aa; }
+
+        p {
+            margin-top: 30px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Кто ты сегодня?</h1>
+
+    <div class="container">
+        <div class="card donkey" onclick="playSound('donkey')">ИШАК</div>
+        <div class="card pig" onclick="playSound('pig')">СВИН</div>
+    </div>
+
+    <p>Нажми на название, чтобы услышать звук</p>
+
+    <audio id="donkey-sound" src="https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-one/animals_donkey_bray_001.mp3"></audio>
+    <audio id="pig-sound" src="https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-one/animals_pig_grunter_001.mp3"></audio>
+
+    <script>
+        function playSound(animal) {
+            // Сначала сбрасываем звук, чтобы можно было кликать часто
+            const donkeyAudio = document.getElementById('donkey-sound');
+            const pigAudio = document.getElementById('pig-sound');
+            
+            if (animal === 'donkey') {
+                donkeyAudio.currentTime = 0; // Перемотка в начало
+                donkeyAudio.play();
+            } else if (animal === 'pig') {
+                pigAudio.currentTime = 0; // Перемотка в начало
+                pigAudio.play();
+            }
+        }
+    </script>
+
+</body>
+</html>

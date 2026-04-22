@@ -3,93 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ишак или Свин?</title>
+    <title>Выбери зверя</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
             margin: 0;
-            background-color: #f0f0f0;
+            background-color: #222;
+            color: white;
         }
 
         h1 {
-            color: #333;
-            margin-bottom: 50px;
+            margin-bottom: 60px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .container {
             display: flex;
-            gap: 40px;
+            gap: 30px;
         }
 
         .card {
-            padding: 30px 50px;
-            font-size: 2rem;
-            font-weight: bold;
-            color: white;
-            border-radius: 15px;
+            padding: 40px 60px;
+            font-size: 2.5rem;
+            font-weight: 900;
+            border-radius: 20px;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.1s ease;
             user-select: none;
             text-align: center;
+            min-width: 200px;
         }
 
-        /* Стиль для Ишака */
+        /* Ишак */
         .donkey {
-            background-color: #808080;
-            box-shadow: 0 8px #555;
+            background: linear-gradient(145deg, #6e6e6e, #828282);
+            box-shadow: 0 10px 0 #444, 0 15px 20px rgba(0,0,0,0.5);
         }
 
-        /* Стиль для Свина */
+        /* Свин */
         .pig {
-            background-color: #ff99cc;
-            box-shadow: 0 8px #cc77aa;
+            background: linear-gradient(145deg, #ff85b3, #ffadc2);
+            box-shadow: 0 10px 0 #d6608a, 0 15px 20px rgba(0,0,0,0.5);
         }
 
         .card:active {
-            transform: translateY(4px);
-            box-shadow: 0 4px #444;
+            transform: translateY(8px);
+            box-shadow: 0 2px 0 #333;
         }
 
-        .donkey:active { box-shadow: 0 4px #555; }
-        .pig:active { box-shadow: 0 4px #cc77aa; }
-
-        p {
-            margin-top: 30px;
-            color: #777;
+        .pig:active {
+            box-shadow: 0 2px 0 #9e4665;
         }
     </style>
 </head>
 <body>
 
-    <h1>Кто ты сегодня?</h1>
+    <h1>Кто ты?</h1>
 
     <div class="container">
         <div class="card donkey" onclick="playSound('donkey')">ИШАК</div>
         <div class="card pig" onclick="playSound('pig')">СВИН</div>
     </div>
 
-    <p>Нажми на название, чтобы услышать звук</p>
-
-    <audio id="donkey-sound" src="https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-one/animals_donkey_bray_001.mp3"></audio>
-    <audio id="pig-sound" src="https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-one/animals_pig_grunter_001.mp3"></audio>
+    <audio id="donkey-sound" src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Donkey_braying.ogg"></audio>
+    <audio id="pig-sound" src="https://www.myinstants.com/media/sounds/pig-oink-sound-effect.mp3"></audio>
 
     <script>
         function playSound(animal) {
-            // Сначала сбрасываем звук, чтобы можно было кликать часто
             const donkeyAudio = document.getElementById('donkey-sound');
             const pigAudio = document.getElementById('pig-sound');
             
+            // Останавливаем оба звука перед запуском нового
+            donkeyAudio.pause();
+            pigAudio.pause();
+            donkeyAudio.currentTime = 0;
+            pigAudio.currentTime = 0;
+
             if (animal === 'donkey') {
-                donkeyAudio.currentTime = 0; // Перемотка в начало
-                donkeyAudio.play();
+                donkeyAudio.play().catch(e => console.log("Нужен клик по странице"));
             } else if (animal === 'pig') {
-                pigAudio.currentTime = 0; // Перемотка в начало
-                pigAudio.play();
+                pigAudio.play().catch(e => console.log("Нужен клик по странице"));
             }
         }
     </script>

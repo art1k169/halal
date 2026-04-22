@@ -3,95 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Выбери зверя</title>
+    <title>Ишак или Свин</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
             margin: 0;
-            background-color: #222;
-            color: white;
+            font-family: 'Arial Black', sans-serif;
         }
 
         h1 {
-            margin-bottom: 60px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            color: #fff;
+            font-size: 3rem;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
         }
 
-        .container {
+        .btn-container {
             display: flex;
-            gap: 30px;
+            gap: 20px;
         }
 
-        .card {
-            padding: 40px 60px;
+        .animal-btn {
+            padding: 50px 70px;
             font-size: 2.5rem;
-            font-weight: 900;
-            border-radius: 20px;
+            border: none;
+            border-radius: 25px;
             cursor: pointer;
-            transition: all 0.1s ease;
-            user-select: none;
-            text-align: center;
-            min-width: 200px;
+            color: white;
+            transition: all 0.1s;
+            text-transform: uppercase;
         }
 
-        /* Ишак */
-        .donkey {
-            background: linear-gradient(145deg, #6e6e6e, #828282);
-            box-shadow: 0 10px 0 #444, 0 15px 20px rgba(0,0,0,0.5);
+        /* ИШАК */
+        .donkey-btn {
+            background: #5d4037;
+            box-shadow: 0 10px #3e2723;
         }
 
-        /* Свин */
-        .pig {
-            background: linear-gradient(145deg, #ff85b3, #ffadc2);
-            box-shadow: 0 10px 0 #d6608a, 0 15px 20px rgba(0,0,0,0.5);
-        }
-
-        .card:active {
+        .donkey-btn:active {
+            box-shadow: 0 2px #3e2723;
             transform: translateY(8px);
-            box-shadow: 0 2px 0 #333;
         }
 
-        .pig:active {
-            box-shadow: 0 2px 0 #9e4665;
+        /* СВИН */
+        .pig-btn {
+            background: #ff80ab;
+            box-shadow: 0 10px #c51162;
+        }
+
+        .pig-btn:active {
+            box-shadow: 0 2px #c51162;
+            transform: translateY(8px);
         }
     </style>
 </head>
 <body>
 
-    <h1>Кто ты?</h1>
+    <h1>ВЫБЕРИ КТО ТЫ</h1>
 
-    <div class="container">
-        <div class="card donkey" onclick="playSound('donkey')">ИШАК</div>
-        <div class="card pig" onclick="playSound('pig')">СВИН</div>
+    <div class="btn-container">
+        <button class="animal-btn donkey-btn" onclick="playDonkey()">ИШАК</button>
+        <button class="animal-btn pig-btn" onclick="playPig()">СВИН</button>
     </div>
 
-    <audio id="donkey-sound" src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Donkey_braying.ogg"></audio>
-    <audio id="pig-sound" src="https://www.myinstants.com/media/sounds/pig-oink-sound-effect.mp3"></audio>
-
     <script>
-        function playSound(animal) {
-            const donkeyAudio = document.getElementById('donkey-sound');
-            const pigAudio = document.getElementById('pig-sound');
-            
-            // Останавливаем оба звука перед запуском нового
-            donkeyAudio.pause();
-            pigAudio.pause();
-            donkeyAudio.currentTime = 0;
-            pigAudio.currentTime = 0;
+        // Звуки в формате Base64 (встроены прямо в код)
+        const donkeySnd = new Audio("data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA="); 
+        const pigSnd = new Audio("data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=");
 
-            if (animal === 'donkey') {
-                donkeyAudio.play().catch(e => console.log("Нужен клик по странице"));
-            } else if (animal === 'pig') {
-                pigAudio.play().catch(e => console.log("Нужен клик по странице"));
-            }
+        // Заменяем на рабочие ссылки, которые разрешают проигрывание
+        // Если эти ссылки со временем упадут, лучше всего скачать mp3 файлы в папку с сайтом
+        const donkeyUrl = "https://www.myinstants.com/media/sounds/donkey.mp3";
+        const pigUrl = "https://www.myinstants.com/media/sounds/pig-oink-sound-effect.mp3";
+
+        const audioDonkey = new Audio(donkeyUrl);
+        const audioPig = new Audio(pigUrl);
+
+        function playDonkey() {
+            audioDonkey.currentTime = 0;
+            audioDonkey.play().catch(e => {
+                // Если браузер блокирует, пробуем альтернативный источник
+                new Audio("https://actions.google.com/sounds/v1/animals/donkey_braying.ogg").play();
+            });
+        }
+
+        function playPig() {
+            audioPig.currentTime = 0;
+            audioPig.play().catch(e => {
+                new Audio("https://actions.google.com/sounds/v1/animals/pig_grunt.ogg").play();
+            });
         }
     </script>
-
 </body>
 </html>
